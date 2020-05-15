@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const usuario = require("../models/usuario");
-const validar = require("../middleware/validarUsuario");
+const adminToken = require("../utils/adminToken");
 
 // implementar el jwt
 // implemenatr usuarios admin y usuarios corrientes
@@ -30,7 +30,12 @@ router
     res.json("dato del usuario actualizado ");
   });
 
-router.route("/login").get(validar(), async (req, res) => {});
+router.route("/login").get(async (req, res) => {
+  const { correo, contrasena } = req.body;
+  const user = await usuario.validar(correo, contrasena);
+  const token = adminToken.crearToken(user);
+  res.json(token);
+});
 
 // .get(async (req, res) => {
 //   const { usuario, correo, contrasena } = req.body;

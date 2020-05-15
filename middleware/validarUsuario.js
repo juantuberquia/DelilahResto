@@ -1,5 +1,5 @@
-function validar(req, res, next) {
+module.exports = function validarAdmin(req, res, next) {
   console.log("entro al middlewared");
-}
-
-module.exports = validar;
+  console.log();
+  next();
+};

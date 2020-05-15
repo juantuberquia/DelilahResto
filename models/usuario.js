@@ -63,6 +63,24 @@ Usuarios.actualizarPorID = async (id) => {
   return resul;
 };
 
+Usuarios.validar = async (correo, contrasena) => {
+  const resul = await sequelize.query(
+    "SELECT usuario, nombreCompleto, correo, telefono, direccion FROM usuarios WHERE correo = ? and contraseña = ?",
+    {
+      replacements: [correo, contrasena],
+      type: sequelize.QueryTypes.SELECT,
+    }
+  );
+  resul.map(function (ele) {
+    if (ele) {
+      console.log(" ok datos usuario");
+    } else {
+      return -1;
+    }
+  });
+  return resul;
+};
+
 // Usuarios.validarUsuario = async () => {
 //   let resultado = await sequelize.query(
 //     "SELECT usuario, correo, contraseña FROM usuarios",
