@@ -71,13 +71,6 @@ Usuarios.validar = async (correo, contrasena) => {
       type: sequelize.QueryTypes.SELECT,
     }
   );
-  resul.map(function (ele) {
-    if (ele) {
-      console.log(" ok datos usuario");
-    } else {
-      return -1;
-    }
-  });
   return resul;
 };
 

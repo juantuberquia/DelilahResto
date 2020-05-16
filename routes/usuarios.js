@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const usuario = require("../models/usuario");
 const adminToken = require("../utils/adminToken");
+const validarUsuario = require("../middleware/validarUsuario");
 
 // implementar el jwt
 // implemenatr usuarios admin y usuarios corrientes
@@ -9,23 +10,22 @@ const adminToken = require("../utils/adminToken");
 router
   .route("/")
   // agregar usuario
-  .post(async (req, res) => {
-    // const resultado = await index.Usuarios();
+  .post(validarUsuario, async (req, res) => {
     await usuario.AgregarUsuario(req.body);
     res.json("usuario agregado");
   })
   // obtener todos los usurios
-  .get(async (req, res) => {
-    await usuario.obtenerUsuarios();
-    res.json(" get usuarios ok ");
+  .get(validarUsuario, async (req, res) => {
+    const resul = await usuario.obtenerUsuarios();
+    res.json(resul);
   })
   // eliminar usuario por id
-  .delete(async (req, res) => {
+  .delete(validarUsuario, async (req, res) => {
     await usuario.eliminarUsuario(req.query.id);
     res.json("usuario eliminado");
   })
   // actualizar usuario por id
-  .put(async (req, res) => {
+  .put(validarUsuario, async (req, res) => {
     await usuario.actualizarPorID(req.query.id);
     res.json("dato del usuario actualizado ");
   });
@@ -33,21 +33,14 @@ router
 router.route("/login").get(async (req, res) => {
   const { correo, contrasena } = req.body;
   const user = await usuario.validar(correo, contrasena);
-  const token = adminToken.crearToken(user);
-  res.json(token);
+  let token;
+
+  if (user.length > 0) {
+    token = adminToken.crearToken(user);
+    res.json(token);
+  } else {
+    res.json(" datos ingresados son incorrectos ");
+  }
 });
-
-// .get(async (req, res) => {
-//   const { usuario, correo, contrasena } = req.body;
-//   const getDatosUsarios = await usuario.validarUsuario();
-
-//   getDatosUsarios.map((ele) => {
-//     if (ele.usuario === usuario || ele.correo === correo) {
-//       if (ele.contraseña === contrasena) {
-//         res.json("usuario logueado");
-//       }
-//     }
-//   });
-// });
 
 module.exports = router;

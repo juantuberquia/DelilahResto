@@ -1,17 +1,15 @@
 const jwt = require("jsonwebtoken");
 const firma = "c0ntr4señaPar4F3rmar";
-// const DatoUsuario = require("../routes/usuarios");
 let token;
 const Token = {};
 
 Token.crearToken = (datoUsuario) => {
-  const token = jwt.sign(datoUsuario, firma);
-  console.log(token);
+  token = jwt.sign(datoUsuario[0], firma);
   return token;
 };
 
-Token.validarToken = () => {
-  jwt.verify(token, firma);
+Token.validarToken = (datoToken) => {
+  jwt.verify(datoToken, firma);
 };
 
 module.exports = Token;
