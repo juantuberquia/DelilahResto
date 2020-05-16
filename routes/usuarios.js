@@ -4,15 +4,12 @@ const usuario = require("../models/usuario");
 const adminToken = require("../utils/adminToken");
 const validarUsuario = require("../middleware/validarUsuario");
 
-// implementar el jwt
-// implemenatr usuarios admin y usuarios corrientes
-
 router
   .route("/")
   // agregar usuario
   .post(validarUsuario, async (req, res) => {
     await usuario.AgregarUsuario(req.body);
-    res.json("usuario agregado");
+    res.json("usuario agregado correctamente");
   })
   // obtener todos los usurios
   .get(validarUsuario, async (req, res) => {
@@ -26,7 +23,7 @@ router
   })
   // actualizar usuario por id
   .put(validarUsuario, async (req, res) => {
-    await usuario.actualizarPorID(req.query.id);
+    await usuario.actualizarPorID(req);
     res.json("dato del usuario actualizado ");
   });
 

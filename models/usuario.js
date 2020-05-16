@@ -13,21 +13,12 @@ Usuarios.AgregarUsuario = async (datosUsuario) => {
     telefono,
     direccion,
     contrasena,
-    esAdmin,
   } = datosUsuario;
 
   let resultado = await sequelize.query(
     "INSERT INTO usuarios( usuario, nombreCompleto, correo, telefono, direccion, contraseña, esAdmin) VALUES (?,?,?,?,?,?,false)",
     {
-      replacements: [
-        usuario,
-        nombre,
-        correo,
-        telefono,
-        direccion,
-        contrasena,
-        esAdmin,
-      ],
+      replacements: [usuario, nombre, correo, telefono, direccion, contrasena],
     }
   );
   return resultado;
@@ -53,11 +44,15 @@ Usuarios.eliminarUsuario = async (id) => {
   return usuario;
 };
 
-Usuarios.actualizarPorID = async (id) => {
+// corregir le tania maria ****
+Usuarios.actualizarPorID = async (req) => {
+  const id = req.query.id;
+  const NewUsuario = req.body.usuario;
+
   const resul = await sequelize.query(
-    "UPDATE usuarios SET usuario='taniaMaria' WHERE idUsuario = ?",
+    "UPDATE usuarios SET usuario=? WHERE idUsuario = ?",
     {
-      replacements: [id],
+      replacements: [NewUsuario, id],
     }
   );
   return resul;
