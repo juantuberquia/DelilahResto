@@ -26,12 +26,24 @@ Usuarios.AgregarUsuario = async (datosUsuario) => {
 
 Usuarios.obtenerUsuarios = async () => {
   const usuarios = await sequelize.query(
-    "SELECT usuario,nombreCompleto FROM `usuarios`",
+    "SELECT usuario,nombreCompleto FROM usuarios",
     {
       type: sequelize.QueryTypes.SELECT,
     }
   );
   return usuarios;
+};
+
+Usuarios.obtenerPorID = async (req) => {
+  const usuario = req.body.usuario;
+  const datosUsuario = sequelize.query(
+    "SELECT usuario, nombreCompleto, correo, telefono, direccion FROM usuarios WHERE usuario= ?",
+    {
+      replacements: [usuario],
+      type: sequelize.QueryTypes.SELECT,
+    }
+  );
+  return datosUsuario;
 };
 
 Usuarios.eliminarUsuario = async (id) => {

@@ -27,6 +27,12 @@ router
     res.json("dato del usuario actualizado ");
   });
 
+// obtener datos personales del usuario
+router.route("/datos-usuario").get(validarUsuario, async (req, res) => {
+  const resultado = await usuario.obtenerPorID(req);
+  res.json(resultado);
+});
+
 router.route("/login").get(async (req, res) => {
   const { correo, contrasena } = req.body;
   const user = await usuario.validar(correo, contrasena);
