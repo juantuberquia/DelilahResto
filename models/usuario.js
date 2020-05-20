@@ -1,8 +1,10 @@
 // integracion con base de datos
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize(
-  "mysql://master_juan:Acamica123@automosaiko.tk:3306/master_juan"
-);
+// const Sequelize = require("sequelize");
+// const sequelize = new Sequelize(
+//   "mysql://master_juan:Acamica123@automosaiko.tk:3306/master_juan"
+// );
+
+const sequelize = require("../configuracion/conexionDB");
 
 const Usuarios = {};
 Usuarios.AgregarUsuario = async (datosUsuario) => {
@@ -72,7 +74,7 @@ Usuarios.actualizarPorID = async (req) => {
 
 Usuarios.validar = async (correo, contrasena) => {
   const resul = await sequelize.query(
-    "SELECT usuario, nombreCompleto, correo, telefono, direccion FROM usuarios WHERE correo = ? and contraseña = ?",
+    "SELECT idUsuario, usuario, nombreCompleto, correo, telefono, direccion FROM usuarios WHERE correo = ? and contraseña = ?",
     {
       replacements: [correo, contrasena],
       type: sequelize.QueryTypes.SELECT,
@@ -80,24 +82,4 @@ Usuarios.validar = async (correo, contrasena) => {
   );
   return resul;
 };
-
-// Usuarios.validarUsuario = async () => {
-//   let resultado = await sequelize.query(
-//     "SELECT usuario, correo, contraseña FROM usuarios",
-//     {
-//       type: sequelize.QueryTypes.SELECT,
-//     }
-//   );
-//   return resultado;
-// };
-
-// Usuarios.AgregarPedido = async (idUsuario, fechaCreacion) => {
-//   let resultado = await sequelize.query(
-//     "INSERT INTO `Pedidos`(idUsuario, fechaCreacion) VALUES (?,?)",
-//     {
-//       replacements: [idUsuario, fechaCreacion],
-//     }
-//   );
-//   return resultado;
-// };
 module.exports = Usuarios;

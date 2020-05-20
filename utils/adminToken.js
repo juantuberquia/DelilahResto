@@ -9,7 +9,7 @@ Token.crearToken = (datoUsuario) => {
 };
 
 Token.validarToken = (datoToken) => {
-  jwt.verify(datoToken, firma);
+  return jwt.verify(datoToken, firma);
 };
 
 module.exports = Token;

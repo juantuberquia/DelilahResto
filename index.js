@@ -11,6 +11,7 @@ app.use(express.json());
 // routes
 app.use("/api/usuarios", require("./routes/usuarios"));
 app.use("/api/producto", require("./routes/productos"));
+app.use("/api/pedido", require("./routes/pedidos"));
 
 // app.use("/api/singup", require("./routes/usuarios"));
 // app.use("/api/login", require("./routes/usuarios"));
