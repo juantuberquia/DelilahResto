@@ -1,12 +1,6 @@
-// integracion con base de datos
-// const Sequelize = require("sequelize");
-// const sequelize = new Sequelize(
-//   "mysql://master_juan:Acamica123@automosaiko.tk:3306/master_juan"
-// );
-
 const sequelize = require("../configuracion/conexionDB");
-
 const Usuarios = {};
+
 Usuarios.AgregarUsuario = async (datosUsuario) => {
   const {
     usuario,
@@ -28,24 +22,12 @@ Usuarios.AgregarUsuario = async (datosUsuario) => {
 
 Usuarios.obtenerUsuarios = async () => {
   const usuarios = await sequelize.query(
-    "SELECT usuario,nombreCompleto FROM usuarios",
+    "SELECT usuario,nombreCompleto, correo, telefono, direccion FROM usuarios",
     {
       type: sequelize.QueryTypes.SELECT,
     }
   );
   return usuarios;
-};
-
-Usuarios.obtenerPorID = async (req) => {
-  const usuario = req.body.usuario;
-  const datosUsuario = sequelize.query(
-    "SELECT usuario, nombreCompleto, correo, telefono, direccion FROM usuarios WHERE usuario= ?",
-    {
-      replacements: [usuario],
-      type: sequelize.QueryTypes.SELECT,
-    }
-  );
-  return datosUsuario;
 };
 
 Usuarios.eliminarUsuario = async (id) => {
@@ -58,7 +40,6 @@ Usuarios.eliminarUsuario = async (id) => {
   return usuario;
 };
 
-// corregir le tania maria ****
 Usuarios.actualizarPorID = async (req) => {
   const id = req.query.id;
   const NewUsuario = req.body.usuario;
@@ -70,6 +51,18 @@ Usuarios.actualizarPorID = async (req) => {
     }
   );
   return resul;
+};
+
+Usuarios.obtenerPorID = async (req) => {
+  const usuario = req.body.usuario;
+  const datosUsuario = sequelize.query(
+    "SELECT usuario, nombreCompleto, correo, telefono, direccion FROM usuarios WHERE usuario= ?",
+    {
+      replacements: [usuario],
+      type: sequelize.QueryTypes.SELECT,
+    }
+  );
+  return datosUsuario;
 };
 
 Usuarios.validar = async (correo, contrasena) => {

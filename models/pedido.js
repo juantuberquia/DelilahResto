@@ -23,10 +23,9 @@ pedido.obtenerPedidos = async () => {
 };
 
 pedido.obtenerPedidoPorId = async (req) => {
-  const id = req.query.id;
-
+  const id = req.datosUsuarioLogin.idUsuario;
   const resultado = sequelize(
-    "SELECT  `idUsuario`, `fechaCreacion`, `metodoPago`, `estadoProducto` FROM `Pedidos` WHERE idPedidos =?",
+    "SELECT idPedido, `idUsuario`, `fechaCreacion`, `metodoPago`, `estadoProducto` FROM `Pedidos` WHERE idPedidos =?",
     {
       replacements: [id],
     }
@@ -35,12 +34,13 @@ pedido.obtenerPedidoPorId = async (req) => {
 };
 
 pedido.cancelarPedido = async (req) => {
-  const idPedido = req.body.id;
+  const idusuario = req.datosUsuarioLogin.idUsuario;
+  const idpedido = req.query.idpedido;
 
   const resultado = await sequelize.query(
-    "UPDATE Pedidos SET estadoProducto = 'cancelado'  WHERE idPedidos =",
+    "UPDATE Pedidos SET estadoProducto = 'cancelado'  WHERE idUsuario =? and idPedidos = ?",
     {
-      replacements: [idPedido],
+      replacements: [idusuario, idpedido],
     }
   );
   return resultado;

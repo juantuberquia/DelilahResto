@@ -4,35 +4,39 @@ const usuario = require("../models/usuario");
 const adminToken = require("../utils/adminToken");
 const validarUsuario = require("../middleware/validarUsuario");
 
+const jwt = require("jsonwebtoken");
+
 router
   .route("/")
   // agregar usuario
-  .post(validarUsuario, async (req, res) => {
+  .post(validarUsuario.validarAdmin, async (req, res) => {
     await usuario.AgregarUsuario(req.body);
     res.json("usuario agregado correctamente");
   })
   // obtener todos los usurios
-  .get(validarUsuario, async (req, res) => {
+  .get(validarUsuario.validarAdmin, async (req, res) => {
     const resul = await usuario.obtenerUsuarios();
-    res.json(resul);
+    console.log(resul);
+    res.json(resul[0]);
   })
   // eliminar usuario por id
-  .delete(validarUsuario, async (req, res) => {
-    await usuario.eliminarUsuario(req.query.id);
+  .delete(validarUsuario.validarAdmin, async (req, res) => {
+    await usuario.eliminarUsuario(Number(req.query.id));
     res.json("usuario eliminado");
   })
   // actualizar usuario por id
-  .put(validarUsuario, async (req, res) => {
+  .put(validarUsuario.validarAdmin, async (req, res) => {
     await usuario.actualizarPorID(req);
     res.json("dato del usuario actualizado ");
   });
 
 // obtener datos personales del usuario
-router.route("/datos-usuario").get(validarUsuario, async (req, res) => {
+router.route("/usuario").get(validarUsuario.validarAdmin, async (req, res) => {
   const resultado = await usuario.obtenerPorID(req);
   res.json(resultado);
 });
 
+// validacion logueo
 router.route("/login").get(async (req, res) => {
   const { correo, contrasena } = req.body;
   const user = await usuario.validar(correo, contrasena);
