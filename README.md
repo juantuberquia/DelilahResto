@@ -4,9 +4,9 @@ se base en la construccion de una API, para realizar pedidos en un restaurante
 
 ## instalacion del proyecto
 
--ejecutar el comando npm install
--ejecutar los querys que se encuentran en el archivo createDataBase, el cual esta alojado en la carpeta scripts
--en la carpeta configuracion se encuentra alojado el archivo conexionDB.js, en el cual se puede cambiar La cadena de conexión
+- ejecutar el comando npm install
+- ejecutar los querys que se encuentran en el archivo createDataBase, el cual esta alojado en la carpeta scripts
+- en la carpeta configuracion se encuentra alojado el archivo conexionDB.js, en el cual se puede cambiar La cadena de conexión
 
 - Para registrar un nuevo usuario:
 
