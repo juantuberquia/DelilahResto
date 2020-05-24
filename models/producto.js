@@ -13,6 +13,16 @@ productos.agregarProducto = async (req) => {
   return resultado;
 };
 
+productos.obtenerProductos = async () => {
+  const resultado = await sequelize.query(
+    "SELECT nombre, precio FROM Productos",
+    {
+      type: sequelize.QueryTypes.SELECT,
+    }
+  );
+  return resultado;
+};
+
 productos.obtenerPorID = async (req) => {
   const id = req.query.id;
 

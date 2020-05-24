@@ -7,11 +7,12 @@ CREATE TABLE usuarios (
     telefono int not null,
     direccion varchar (60) not null,
     contraseña varchar (60) not null,
-    esAdmin BOOLEAN
+    esAdmin BOOLEAN not null,
+    PRIMARY KEY (idUsuario)
    
 ); 
 
--- query administrador DB
+-- query para usuario administrador DB
 INSERT INTO `usuarios`(
     `usuario`,
     `nombreCompleto`,
@@ -30,3 +31,31 @@ VALUES(
     "4dmin40",
     TRUE
 )
+
+CREATE TABLE Productos (
+
+    idProducto int not null AUTO_INCREMENT,
+    nombre varchar (60) not null,
+    precio varchar (60) not null,
+    PRIMARY KEY (idProducto)
+      
+); 
+
+CREATE TABLE Pedidos (
+
+    idPedidos int not null AUTO_INCREMENT,
+    idUsuario int not null,
+    nombre varchar (60) not null,
+    precio varchar (60) not null,
+    PRIMARY KEY (idPedidos),
+    FOREIGN KEY (idUsuario) REFERENCES usuarios(idUsuario)
+); 
+
+CREATE TABLE Pedidos_Productos (
+
+    id int not null AUTO_INCREMENT,
+    idPedidos int not null,
+    idProducto int not null,
+    FOREIGN KEY (idPedidos) REFERENCES Pedidos(idPedidos),
+    FOREIGN KEY (idProducto) REFERENCES Productos(idProducto)
+); 
