@@ -5,6 +5,8 @@ const pedido = {};
 pedido.agregarPedido = async (req) => {
   const { fechaCreacion, metodoPago } = req.body;
   const idUsuario = req.datosUsuarioLogin.idUsuario;
+  const idPedido = req.query.idPed;
+  const idProducto = req.query.idPro;
 
   const resultado = await sequelize.query(
     " INSERT INTO Pedidos(idUsuario, fechaCreacion, metodoPago, estadoProducto) VALUES (?,?,?,'nuevo')",
@@ -12,13 +14,24 @@ pedido.agregarPedido = async (req) => {
       replacements: [idUsuario, fechaCreacion, metodoPago],
     }
   );
-  return resultado;
+
+  const pedidoProducto = await sequelize.query(
+    "INSERT INTO Pedidos_Productos(idPedidos, idProducto) VALUES ( ?,?)",
+    {
+      replacements: [idPedido, idProducto],
+    }
+  );
+
+  return [resultado, pedidoProducto];
 };
 
 pedido.obtenerPedidos = async () => {
-  const resultado = await sequelize.query("SELECT * FROM Pedidos", {
-    type: sequelize.QueryTypes.SELECT,
-  });
+  const resultado = await sequelize.query(
+    "SELECT Pedidos.estadoProducto, Pedidos.fechaCreacion, Pedidos.idPedidos, Productos.nombre, Pedidos.metodoPago, Productos.precio, usuarios.nombreCompleto, usuarios.direccion FROM usuarios INNER JOIN Pedidos ON usuarios.idUsuario = Pedidos.idUsuario INNER JOIN Pedidos_Productos ON Pedidos_Productos.idPedidos = Pedidos.idPedidos INNER JOIN Productos ON Pedidos_Productos.idProducto = Productos.idProducto ",
+    {
+      type: sequelize.QueryTypes.SELECT,
+    }
+  );
   return resultado;
 };
 
@@ -33,17 +46,17 @@ pedido.obtenerPedidoPorId = async (req) => {
   return resultado;
 };
 
-pedido.cancelarPedido = async (req) => {
+pedido.actualizarEstado = async (req) => {
   const idusuario = req.datosUsuarioLogin.idUsuario;
   const idpedido = req.query.idpedido;
+  const estado = req.body;
 
   const resultado = await sequelize.query(
     "UPDATE Pedidos SET estadoProducto = 'cancelado'  WHERE idUsuario =? and idPedidos = ?",
     {
-      replacements: [idusuario, idpedido],
+      replacements: [estado, idusuario, idpedido],
     }
   );
   return resultado;
 };
-
 module.exports = pedido;

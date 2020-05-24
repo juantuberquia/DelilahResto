@@ -20,15 +20,22 @@ router
     }
   )
   //obtener pedido por id
-  .get(validarUsuario.validarAdmin, async (req, res) => {
-    const dato = await pedido.obtenerPedidoPorId(req);
-    res.json(dato);
-  })
+  .get(
+    validarUsuario.validarAdmin,
+    validarUsuario.autenticar,
+    async (req, res) => {
+      const dato = await pedido.obtenerPedidoPorId(req);
+      res.json(dato);
+    }
+  )
   // cancelar pedido
-  .put(validarUsuario.validarAdmin, async (req, res) => {
-    const resultado = await pedido.cancelarPedido(req);
-
-    res.json("producto cancelado correctamente");
-  });
+  .put(
+    validarUsuario.validarAdmin,
+    validarUsuario.autenticar,
+    async (req, res) => {
+      await pedido.actualizarEstado(req);
+      res.json("producto cancelado correctamente");
+    }
+  );
 
 module.exports = router;
