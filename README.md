@@ -1,20 +1,20 @@
-Proyecto Delilah Resto
+# Proyecto Delilah Resto
 
 se base en la construccion de una API, para realizar pedidos en un restaurante
 
 ## instalacion del proyecto
 
-- ejecutar el comando npm install
-- ejecutar los querys que se encuentran en el archivo createDataBase, el cual esta alojado en la carpeta scripts
-- en la carpeta configuracion se encuentra alojado el archivo conexionDB.js, en el cual se puede cambiar La cadena de conexión
+1. ejecutar el comando npm install
+2. ejecutar los querys que se encuentran en el archivo createDataBase, el cual esta alojado en la carpeta scripts
+3. en la carpeta configuracion se encuentra alojado el archivo conexionDB.js, en el cual se puede cambiar La cadena de conexión
 
-- Para registrar un nuevo usuario:
+### Para registrar un nuevo usuario:
 
 1. ingresar a la aplicacion POSTMAN
 2. ingresar a la sub-carpeta usuarios
 3. ingresar al endpoint agregar usuarios, proceder a ingresar los datos: usuario, nombre, correo telefono, direccion, contrasena
 
-- Para obtener la lista de los productos
+### Para obtener la lista de los productos
 
 1. ingresar a la aplicacion POSTMAN
 2. ingresar a la sub-carpeta usuarios
@@ -23,7 +23,7 @@ se base en la construccion de una API, para realizar pedidos en un restaurante
 4. ingresar a la sub-carpeta producto
 5. ingresar al endpoint obtener productos
 
-- Para agregar un pedido
+### Para agregar un pedido
 
 1. ingresar a la aplicacion POSTMAN
 2. ingresar a la sub-carpeta usuarios
@@ -33,7 +33,7 @@ se base en la construccion de una API, para realizar pedidos en un restaurante
 5. ingresar al endpoint realizar pedido
 6. ingresar los datos: fechaCreacion y metodoPago
 
-- Para actualizar un estado
+### Para actualizar un estado
 
 1. ingresar a la aplicacion POSTMAN
 2. ingresar a la sub-carpeta usuarios
@@ -42,7 +42,7 @@ se base en la construccion de una API, para realizar pedidos en un restaurante
 4. ingresar a la sub-carpeta pedido
 5. ingresar al endpoint actualizar pedido
 
-- operacion CRUD sobre los productos
+### operacion CRUD sobre los productos
 
 1. ingresar a la aplicacion POSTMAN
 2. ingresar a la sub-carpeta usuarios
