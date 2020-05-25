@@ -12,11 +12,11 @@ $ git clone https://github.com/juantuberquia/DelilahResto
 Ejecutar el comando npm install
 ```
 
-3. Ejecutar los querys que se encuentran en el archivo createDataBase, el cual esta alojado en la carpeta scripts
-4. En la carpeta configuracion se encuentra alojado el archivo conexionDB.js, en el cual se puede cambiar La cadena de conexión
+1. Ejecutar los querys que se encuentran en el archivo createDataBase, el cual esta alojado en la carpeta scripts
+2. En la carpeta configuracion se encuentra alojado el archivo conexionDB.js, en el cual se puede cambiar la cadena de conexión
 
 ```
-$ nodemon index.js
+$ goitnodemon index.js
 ```
 
 ### Para registrar un nuevo usuario:
@@ -53,7 +53,7 @@ $ nodemon index.js
 4. Ingresar a la sub-carpeta pedido
 5. Ingresar al endpoint actualizar pedido
 
-### operacion CRUD sobre los productos
+### Operacion CRUD sobre los productos
 
 1. Ingresar a la aplicacion POSTMAN
 2. Ingresar a la sub-carpeta usuarios

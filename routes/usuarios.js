@@ -44,7 +44,7 @@ router.route("/login").get(async (req, res) => {
 
   if (user.length > 0) {
     token = adminToken.crearToken(user);
-    res.json(token);
+    res.json({ token });
   } else {
     res.json(" datos ingresados son incorrectos ");
   }

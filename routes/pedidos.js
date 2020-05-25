@@ -15,8 +15,8 @@ router
     validarUsuario.validarAdmin,
     validarUsuario.autenticar,
     async (req, res) => {
-      const datos = await pedido.obtenerPedidos();
-      res.json(datos);
+      const pedidos = await pedido.obtenerPedidos();
+      res.json({ pedidos });
     }
   )
   //obtener pedido por id
