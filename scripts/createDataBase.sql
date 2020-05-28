@@ -9,7 +9,6 @@ CREATE TABLE usuarios (
     contraseña varchar (60) not null,
     esAdmin BOOLEAN not null,
     PRIMARY KEY (idUsuario)
-   
 ); 
 
 -- query para usuario administrador DB

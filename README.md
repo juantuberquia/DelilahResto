@@ -8,15 +8,21 @@ Se base en la construccion de una API, para realizar pedidos en un restaurante
 $ git clone https://github.com/juantuberquia/DelilahResto
 ```
 
-```
-Ejecutar el comando npm install
-```
-
-1. Ejecutar los querys que se encuentran en el archivo createDataBase, el cual esta alojado en la carpeta scripts
-2. En la carpeta configuracion se encuentra alojado el archivo conexionDB.js, en el cual se puede cambiar la cadena de conexión
+### Instalar dependencias
 
 ```
-$ goitnodemon index.js
+ npm install
+```
+
+## Base de Datos
+
+1. iniciar MYSQL
+2. crear una base de datos
+3. abrir `conexionDB.js` , cuya ruta es ( `DelilahResto\configuracion`), en el cual se puede editar la cadena de conexión, nombre de base de datos, usuario, contraseña, etc.
+4. Ejecutar los querys que se encuentran en el archivo `createDataBase.js`, cuya ruta es : (`DelilahResto\scripts`).
+
+```
+$ node index.js
 ```
 
 ### Para registrar un nuevo usuario:
@@ -64,5 +70,3 @@ $ goitnodemon index.js
 6. Obtener producto : ingresar al endpoint obtener producto por ID
 7. Actualizar producto : ingresar al endpoint actualizar producto por ID
 8. Eliminar producto : ingresar al endpoint eliminar producto por ID
-
-<!-- falta agregar que dbe coger la repsuest json que le da cuanndo se loguea y debe engersarlso  ene el headers como authrization, falta os querys params -->
