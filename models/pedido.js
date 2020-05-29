@@ -63,10 +63,10 @@ pedido.obtenerPedidoPorId = async (req) => {
 pedido.actualizarEstado = async (req) => {
   const idusuario = req.datosUsuarioLogin.idUsuario;
   const idpedido = req.query.idpedido;
-  const estado = req.body;
+  const estado = req.body.estadoProducto;
 
   const resultado = await sequelize.query(
-    "UPDATE Pedidos SET estadoProducto = 'cancelado'  WHERE idUsuario =? and idPedidos = ?",
+    `UPDATE Pedidos SET estadoProducto = ?  WHERE idUsuario =? and idPedidos = ?`,
     {
       replacements: [estado, idusuario, idpedido],
     }
