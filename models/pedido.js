@@ -1,11 +1,10 @@
 const sequelize = require("../configuracion/conexionDB");
-
 const pedido = {};
 
 pedido.agregarPedido = async (req) => {
   const { fechaCreacion, metodoPago } = req.body;
   const idUsuario = req.datosUsuarioLogin.idUsuario;
-  const idPedido = req.query.idPed;
+  // const idPedido = req.query.idPed;
   const idProducto = req.query.idPro;
 
   const resultado = await sequelize.query(
@@ -15,13 +14,28 @@ pedido.agregarPedido = async (req) => {
     }
   );
 
-  const pedidoProducto = await sequelize.query(
-    "INSERT INTO Pedidos_Productos(idPedidos, idProducto) VALUES ( ?,?)",
+  const obtenerPedidos = await sequelize.query(
+    " SELECT idPedidos FROM Pedidos ",
     {
-      replacements: [idPedido, idProducto],
+      type: sequelize.QueryTypes.SELECT,
     }
   );
 
+  let vector = [];
+  let conta = 0;
+  obtenerPedidos.map((ele) => {
+    vector[conta] = ele.idPedidos;
+    conta++;
+    vector.sort((a, b) => a - b);
+  });
+  let id = vector[vector.length - 1];
+
+  const pedidoProducto = await sequelize.query(
+    "INSERT INTO Pedidos_Productos(idPedidos, idProducto) VALUES ( ?,?)",
+    {
+      replacements: [id, idProducto],
+    }
+  );
   return [resultado, pedidoProducto];
 };
 
