@@ -1,10 +1,10 @@
 const adminToken = require("../utils/adminToken");
-
 const validaciones = {};
 
-validaciones.validarAdmin = (req, res, next) => {
+validaciones.validarToken = (req, res, next) => {
   try {
     const usuario = adminToken.validarToken(req.headers.authorization);
+    console.log(usuario)
     req.datosUsuarioLogin = usuario;
     next();
   } catch (error) {
@@ -13,13 +13,14 @@ validaciones.validarAdmin = (req, res, next) => {
   }
 };
 
-validaciones.autenticar = (req, res, next) => {
-  const usuario = req.datosUsuarioLogin.usuario;
+// valido si es admin
+validaciones.autenticarAdmin = (req, res, next) => {
+  const permisosUsuario = req.datosUsuarioLogin.esAdmin;
 
-  if (usuario === "4dministr4dor") {
-    next();
+  if (permisosUsuario == false) {
+    res.status(401).json("usuario no tiene permisos")
   } else {
-    res.json("usuario no tiene permisos");
+     next()
   }
 };
 module.exports = validaciones;

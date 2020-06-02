@@ -67,7 +67,7 @@ Usuarios.obtenerPorID = async (req) => {
 
 Usuarios.validar = async (correo, contrasena) => {
   const resul = await sequelize.query(
-    "SELECT idUsuario, usuario, nombreCompleto, correo, telefono, direccion FROM usuarios WHERE correo = ? and contraseña = ?",
+    "SELECT idUsuario, usuario, nombreCompleto, correo, telefono, direccion, esAdmin FROM usuarios WHERE correo = ? and contraseña = ?",
     {
       replacements: [correo, contrasena],
       type: sequelize.QueryTypes.SELECT,

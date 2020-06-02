@@ -1,19 +1,19 @@
 const { Router } = require("express");
 const router = Router();
 const pedido = require("../models/pedido");
-const validarUsuario = require("../middleware/validarUsuario");
+const validacion = require("../middleware/validaciones");
 
 router
   .route("/")
   // agregar pedido
-  .post(validarUsuario.validarAdmin, async (req, res) => {
+  .post(validacion.validarToken, async (req, res) => {
     await pedido.agregarPedido(req);
     res.json("pedido agregado");
   })
   // obtener todos los pedidos
   .get(
-    validarUsuario.validarAdmin,
-    validarUsuario.autenticar,
+    validacion.validarToken,
+    validacion.autenticarAdmin,
     async (req, res) => {
       const pedidos = await pedido.obtenerPedidos();
       res.json({ pedidos });
@@ -21,20 +21,29 @@ router
   )
   //obtener pedido por id
   .get(
-    validarUsuario.validarAdmin,
-    validarUsuario.autenticar,
+    validacion.validarToken,
+    validacion.autenticarAdmin,
     async (req, res) => {
       const dato = await pedido.obtenerPedidoPorId(req);
       res.json(dato);
     }
   )
-  // cancelar pedido
+
+  // borrar pedido
+  .delete(validacion.validarToken,
+    validacion.autenticarAdmin,
+    async(req, res)=>{
+      await pedido.eliminarPedido (req)
+      res.status(200).json("pedido eliminado correctamente")
+    })
+
+  // actualizar pedido
   .put(
-    validarUsuario.validarAdmin,
-    validarUsuario.autenticar,
+    validacion.validarToken,
+    validacion.autenticarAdmin,
     async (req, res) => {
       await pedido.actualizarEstado(req);
-      res.json("producto cancelado correctamente");
+      res.json("estado del producto actualizado correctamente");
     }
   );
 

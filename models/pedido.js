@@ -73,4 +73,20 @@ pedido.actualizarEstado = async (req) => {
   );
   return resultado;
 };
+
+pedido.eliminarPedido = async (req)=>{
+  const id = req.query.idPedido
+
+  const tablaPedProd = await sequelize.query("DELETE FROM Pedidos_Productos WHERE idPedidos = ?",{
+    replacements:[id]
+  })
+  
+  const tablaPed  = await sequelize.query(
+     "DELETE FROM Pedidos WHERE idPedidos = ?", {  
+    replacements:[id],
+})
+
+return [tablaPedProd, tablaPed ] 
+}
+
 module.exports = pedido;

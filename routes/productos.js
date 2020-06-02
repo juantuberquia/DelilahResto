@@ -1,13 +1,13 @@
 const { Router } = require("express");
 const router = Router();
 const producto = require("../models/producto");
-const validarUsuario = require("../middleware/validarUsuario");
+const validacion = require("../middleware/validaciones");
 
 router
   .route("/")
   .post(
-    validarUsuario.validarAdmin,
-    validarUsuario.autenticar,
+    validacion.validarToken,
+    validacion.autenticarAdmin,
     async (req, res) => {
       await producto.agregarProducto(req);
       res.json("producto agregado correctamente");
@@ -16,8 +16,7 @@ router
 
   // obtener productos
   .get(
-    validarUsuario.validarAdmin,
-    validarUsuario.autenticar,
+    validacion.validarToken,
     async (req, res) => {
       const productos = await producto.obtenerProductos(req);
       res.json(productos);
@@ -25,16 +24,16 @@ router
   )
 
   .put(
-    validarUsuario.validarAdmin,
-    validarUsuario.autenticar,
+    validacion.validarToken,
+    validacion.autenticarAdmin,
     async (req, res) => {
       await producto.actualizarPorID(req);
       res.json("Nombre del producto actualizado");
     }
   )
   .delete(
-    validarUsuario.validarAdmin,
-    validarUsuario.autenticar,
+    validacion.validarToken,
+    validacion.autenticarAdmin,
     async (req, res) => {
       await producto.eliminarProducto(req);
       res.json("producto eliminado exitosamente");
@@ -45,8 +44,8 @@ router
 router
   .route("/id")
   .get(
-    validarUsuario.validarAdmin,
-    validarUsuario.autenticar,
+    validacion.validarToken,
+    validacion.autenticarAdmin,
     async (req, res) => {
       const ObtenerProducto = await producto.obtenerPorID(req);
       res.json(ObtenerProducto);
