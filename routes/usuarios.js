@@ -7,13 +7,10 @@ const validacion = require("../middleware/validaciones");
 router
   .route("/")
   // agregar usuario
-  .post(
-    validacion.validarToken,
-    async (req, res) => {
-      await usuario.AgregarUsuario(req.body);
-      res.json("usuario agregado correctamente");
-    }
-  )
+  .post(async (req, res) => {
+    await usuario.AgregarUsuario(req.body);
+    res.json("usuario agregado correctamente");
+  })
   // obtener todos los usurios
   .get(
     validacion.validarToken,
@@ -60,7 +57,7 @@ router.route("/login").get(async (req, res) => {
   const { correo, contrasena } = req.body;
   const user = await usuario.validar(correo, contrasena);
   let token;
-  
+
   if (user.length > 0) {
     token = adminToken.crearToken(user);
     res.json({ token });

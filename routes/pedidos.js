@@ -30,12 +30,14 @@ router
   )
 
   // borrar pedido
-  .delete(validacion.validarToken,
+  .delete(
+    validacion.validarToken,
     validacion.autenticarAdmin,
-    async(req, res)=>{
-      await pedido.eliminarPedido (req)
-      res.status(200).json("pedido eliminado correctamente")
-    })
+    async (req, res) => {
+      await pedido.eliminarPedido(req);
+      res.status(200).json("pedido eliminado correctamente");
+    }
+  )
 
   // actualizar pedido
   .put(
